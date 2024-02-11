@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>トンカツを美味しく揚げるゲーム</title>
+    <style>
+        #tonkatsu {
+            width: 100px;
+            height: 100px;
+            background-color: brown;
+            color: white;
+            text-align: center;
+            line-height: 100px;
+            cursor: move;
+        }
+        #nabe {
+            width: 200px;
+            height: 200px;
+            background-color: gray;
+            margin-top: 20px;
+            position: relative;
+        }
+        #temperature {
+            width: 100%;
+            height: 20px;
+            background-color: red;
+            position: absolute;
+            bottom: 0;
+        }
+        #score {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+        #temperature-label {
+            position: absolute;
+            top: -20px;
+            left: 0;
+            font-size: 12px;
+        }
+    </style>
+    <script>
+        window.addEventListener("DOMContentLoaded", function() {
+            var tonkatsu = document.getElementById("tonkatsu");
+            var nabe = document.getElementById("nabe");
+            var temperature = document.getElementById("temperature");
+            var temperatureLabel = document.getElementById("temperature-label");
+            var score = document.getElementById("score");
+            var currentTemperature = 0;
+            var scoreValue = 0;
+            var increasing = true;
+            var speed = 10;
+            var interval;
+
+            tonkatsu.addEventListener("dragstart", function(event) {
+                event.dataTransfer.setData("text/plain", event.target.id);
+            });
+
+            nabe.addEventListener("dragover", function(event) {
+                event.preventDefault();
+            });
+
+            nabe.addEventListener("drop", function(event) {
+                event.preventDefault();
+                var data = event.dataTransfer.getData("text/plain");
+                if (data === "tonkatsu") {
+                    scoreValue = Math.round((180 - Math.abs(currentTemperature - 180)) / 180 * 100);
+                    score.innerHTML = "得点: " + scoreValue;
+                }
+            });
+
+            function updateTemperature(event) {
+                var rect = temperature.getBoundingClientRect();
+                var x = event.clientX - rect.left;
+                currentTemperature = Math.round(x / rect.width * 360);
+                temperature.style.width = currentTemperature / 360 * 100 + "%";
+                temperatureLabel.innerHTML = currentTemperature + "℃";
+            }
+
+            function changeTemperature() {
+                if (increasing) {
+                    currentTemperature += 1;
+                    if (currentTemperature >= 360) {
+                        increasing = false;
+                    }
+                } else {
+                    currentTemperature -= 1;
+                    if (currentTemperature <= 0) {
+                        increasing = true;
+                    }
+                }
+                temperature.style.width = currentTemperature / 360 * 100 + "%";
+                temperatureLabel.innerHTML = currentTemperature + "℃";
+            }
+
+            temperature.addEventListener("mousemove", updateTemperature);
+            temperature.addEventListener("touchmove", function(event) {
+                event.preventDefault();
+                updateTemperature(event.touches[0]);
+            });
+
+            interval = setInterval(changeTemperature, speed);
+        });
+    </script>
+</head>
+<body>
+    <h1>トンカツを美味しく揚げるゲーム</h1>
+    <div id="tonkatsu" draggable="true">トンカツ</div>
+    <div id="nabe">
+        <div id="temperature"></div>
+        <div id="temperature-label"></div>
+    </div>
+    <div id="score">得点: 0</div>
+</body>
+</html>
