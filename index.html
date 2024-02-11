@@ -103,7 +103,7 @@
 </head>
 <body>
     <h1>トンカツを美味しく揚げるゲーム</h1>
-    <div id="tonkatsu" draggable="true">トンカツ</div>
+    <div id="tonkatsu" draggable="true" ontouchstart="event.preventDefault()" ontouchmove="event.preventDefault()" ontouchend="event.preventDefault()">トンカツ</div>
     <div id="nabe">
         <div id="temperature"></div>
         <div id="temperature-label"></div>
