@@ -93,7 +93,6 @@
 
             temperature.addEventListener("mousemove", updateTemperature);
             temperature.addEventListener("touchmove", function(event) {
-                event.preventDefault();
                 updateTemperature(event.touches[0]);
             });
 
@@ -103,7 +102,7 @@
 </head>
 <body>
     <h1>トンカツを美味しく揚げるゲーム</h1>
-    <div id="tonkatsu" draggable="true" ontouchstart="event.preventDefault()" ontouchmove="event.preventDefault()" ontouchend="event.preventDefault()">トンカツ</div>
+    <div id="tonkatsu" draggable="true">トンカツ</div>
     <div id="nabe">
         <div id="temperature"></div>
         <div id="temperature-label"></div>
