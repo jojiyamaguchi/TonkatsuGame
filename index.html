@@ -4,13 +4,14 @@
     <title>トンカツを美味しく揚げるゲーム</title>
     <style>
         #tonkatsu {
-            width: 100px;
+            width: 200px;
             height: 100px;
             background-color: brown;
             color: white;
             text-align: center;
             line-height: 100px;
             cursor: move;
+            border-radius: 50%;
         }
         #nabe {
             width: 200px;
@@ -27,7 +28,7 @@
             bottom: 0;
         }
         #score {
-            margin-top: 20px;
+            margin-top: 120px; /* 得点の表示位置を下にずらす */
             font-size: 20px;
         }
         #temperature-label {
@@ -35,6 +36,18 @@
             top: -20px;
             left: 0;
             font-size: 12px;
+        }
+        #fire {
+            width: 100px;
+            height: 100px;
+            background-color: orange;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 50%;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
         }
     </style>
     <script>
@@ -106,6 +119,7 @@
     <div id="nabe">
         <div id="temperature"></div>
         <div id="temperature-label"></div>
+        <div id="fire"></div>
     </div>
     <div id="score">得点: 0</div>
 </body>
